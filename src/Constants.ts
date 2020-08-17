@@ -20,11 +20,6 @@ export default class Constants {
 <h3 style="line-height: 0px;">Un gros merci!!</h3>
 Merci pour votre participation à notre campagne de lettre! Des petits gestes simples comme celui-ci par un grand nombre de personnes ont un impact important. 
 <br><br>
-<h3 style="line-height: 0px;">Complétez notre sondage</h3>
-Voici une autre action de moins de 5 minutes que vous pouvez faire dès maintenant pour défendre le vapotage au Québec.
-<br><br>
-<a style="font-weight: bold;" href="http://droitsdesvapoteurs.ca/sondage">Cliquez ici pour compléter notre sondage.</a>
-<br><br>
 Nous vous invitons également à partager notre <a style="font-weight: bold;" href="http://droitsdesvapoteurs.ca/lettres">campagne de lettre</a> avec vos ami.e.s!
 <br><br>
 <h3 style="line-height: 0px;">Abonnez-vous</h3>
