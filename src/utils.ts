@@ -18,3 +18,7 @@ export function parseEmailAddress(address: string): string {
     return address;
 
 }
+
+export function isError(arg: string | Error): arg is Error {
+    return (arg as Error).message !== undefined;
+}

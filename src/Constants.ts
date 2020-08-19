@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 export default class Constants {
 
+    public static readonly NEWLINE = "\n";
+
     public static readonly INBOX_NAME = "INBOX";
 
     public static readonly EMAIL_USERNAME = process.env.EMAIL_USERNAME ?? "";
