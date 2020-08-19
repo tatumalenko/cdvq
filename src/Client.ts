@@ -18,7 +18,7 @@ export default class Client {
 
         return {
             from: `"${Constants.EMAIL_SENDER}" <${Constants.EMAIL_FROM}>"`,
-            to: message.to?.first(),
+            to: message.replyTo?.first(),
             subject: Constants.EMAIL_SUBJECT,
             html: Constants.EMAIL_BODY
         };

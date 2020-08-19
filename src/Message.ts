@@ -8,6 +8,8 @@ export default class Message implements ImapMessage {
 
     to?: string[];
 
+    replyTo?: string[];
+
     cc?: string[];
 
     subject?: string[];
@@ -25,6 +27,7 @@ export default class Message implements ImapMessage {
         this.imapBody = message.parts.first((m) => m.which === Message.HEADER)?.body;
         this.from = this.imapBody?.from?.flatMap(splitByComma)?.map(parseEmailAddress);
         this.to = this.imapBody?.to?.flatMap(splitByComma)?.map(parseEmailAddress);
+        this.replyTo = this.imapBody?.["reply-to"]?.flatMap(splitByComma)?.map(parseEmailAddress);
         this.cc = this.imapBody?.cc?.flatMap(splitByComma)?.map(parseEmailAddress);
         this.subject = this.imapBody?.subject;
         this.date = this.imapBody?.date;
