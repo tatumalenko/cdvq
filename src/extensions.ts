@@ -7,6 +7,7 @@ declare global {
         flatMap<E>(this: T[], mapper: (element: T) => E[]): E[];
         first(this: T[], filter?: (element: T) => Boolean): T | undefined;
         last(this: T[]): T | undefined;
+        includesAny(this: T[], of: T[]): Boolean
     }
 }
 
@@ -34,4 +35,8 @@ Array.prototype.last = function<T> (this: T[]): T | undefined {
         return this[size - 1];
     }
     return undefined;
+};
+
+Array.prototype.includesAny = function<T> (this: T[], of: T[]): Boolean {
+    return this.some((e) => of.includes(e));
 };

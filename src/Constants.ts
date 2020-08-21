@@ -5,11 +5,17 @@ export default class Constants {
 
     public static readonly INBOX_NAME = "INBOX";
 
-    public static readonly EMAIL_USERNAME = process.env.EMAIL_USERNAME ?? "";
+    public static readonly EMAIL_IMAP_USERNAME = process.env.EMAIL_IMAP_USERNAME ?? "";
 
-    public static readonly EMAIL_PASSWORD = process.env.EMAIL_PASSWORD ?? "";
+    public static readonly EMAIL_IMAP_PASSWORD = process.env.EMAIL_IMAP_PASSWORD ?? "";
+
+    public static readonly EMAIL_SMTP_USERNAME = process.env.EMAIL_SMTP_USERNAME ?? "";
+
+    public static readonly EMAIL_SMTP_PASSWORD = process.env.EMAIL_SMTP_PASSWORD ?? "";
 
     public static readonly EMAIL_FROM = "lettres@droitsdesvapoteurs.ca";
+
+    public static readonly EMAIL_CAMPAIGN_FROM = "people@pushpolitics.net";
 
     public static readonly EMAIL_SENDER = "CDVQ";
 
@@ -46,7 +52,7 @@ info@droitsdesvapoteurs.ca
 
     public static readonly SMTP_PORT = 587;
 
-    public static readonly IMAP_HOST = "outlook.office365.com";
+    public static readonly IMAP_HOST = "imap.gmail.com";
 
     public static readonly IMAP_PORT = 993;
 }

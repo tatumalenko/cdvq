@@ -28,6 +28,10 @@ export default class Client {
             return undefined;
         }
 
+        if (!message.from?.includes(Constants.EMAIL_CAMPAIGN_FROM)) {
+            Log.info(`Message did not originate from campaign sender email, came instead from: ${message.from}`);
+        }
+
         return {
             from: `"${Constants.EMAIL_SENDER}" <${Constants.EMAIL_FROM}>"`,
             to: message.replyTo?.first(),
@@ -66,8 +70,8 @@ export default class Client {
             port: Constants.SMTP_PORT,
             secure: false,
             auth: {
-                user: Constants.EMAIL_USERNAME,
-                pass: Constants.EMAIL_PASSWORD
+                user: Constants.EMAIL_SMTP_USERNAME,
+                pass: Constants.EMAIL_SMTP_PASSWORD
             }
         });
 
@@ -88,8 +92,8 @@ export default class Client {
     async start() {
         try {
             const imapConfig: Imap.Config = {
-                user: Constants.EMAIL_USERNAME,
-                password: Constants.EMAIL_PASSWORD,
+                user: Constants.EMAIL_IMAP_USERNAME,
+                password: Constants.EMAIL_IMAP_PASSWORD,
                 host: Constants.IMAP_HOST,
                 port: Constants.IMAP_PORT,
                 tls: true,
