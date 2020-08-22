@@ -6,10 +6,11 @@ import Imap from "imap";
 import imaps from "imap-simple";
 import nodemailer from "nodemailer";
 import Constants from "./Constants";
-import "./extensions";
-import Log from "./Log";
-import Message from "./Message";
-import { notUndefined } from "./utils";
+import Rights4VapersFormParser from "./form/Rights4VapersFormParser";
+import Rights4VapersSurvey from "./form/Rights4VapersSurvey";
+import Message from "./mail/Message";
+import "./utils/extensions";
+import Log from "./utils/Log";
 
 process.on("unhandledRejection", (reason, p) => {
     Log.error("Unhandled Rejection at:", p.toString(), "reason:", reason === null ? "" : reason?.toString() ?? "");
@@ -18,6 +19,8 @@ process.on("unhandledRejection", (reason, p) => {
 });
 
 export default class Client {
+    private readonly formParser = new Rights4VapersFormParser();
+
     private static stringify(mail: nodemailer.SendMailOptions): string {
         return `from:${mail.from}${Constants.NEWLINE}to:${mail.to}${Constants.NEWLINE}`;
     }
@@ -40,7 +43,7 @@ export default class Client {
         };
     }
 
-    async sendMail(connection: imaps.ImapSimple) {
+    async process(connection: imaps.ImapSimple) {
         const searchCriteria = [ "UNSEEN" ];
         const fetchOptions = {
             bodies: [ "HEADER", "TEXT" ],
@@ -51,19 +54,36 @@ export default class Client {
             fetchOptions
         )).map(Message.make);
 
-        if (messages.filter(notUndefined).length === 0) {
+        await this.processMessages(messages);
+    }
+
+    async processMessages(messages: Message[]) {
+        if (messages.filterNotNone().isEmpty()) {
             Log.info("No new unread emails found.");
             return;
         }
 
-        const drafts = messages.map(this.makeMail).filter(notUndefined);
+        await Promise.all(messages.map((message) => {
+            if (message?.from && message?.from.first() === Constants.EMAIL_CAMPAIGN_FROM) {
+                return this.sendMail(message);
+            } else if (message?.from && message?.from.first() === Constants.EMAIL_SURVEY_FROM) {
+                return this.sendSurvey(message);
+            }
 
-        if (drafts.length === 0) {
-            Log.info("No new messages were created.");
+            return undefined;
+        })
+            .filterNotNone());
+    }
+
+    async sendMail(message: Message) {
+        const draft = this.makeMail(message);
+
+        if (!draft) {
+            Log.info("No draft was created.");
             return;
         }
 
-        Log.info("Preparing to send drafts:", drafts.reduce((acc, draft) => `${acc}${Constants.NEWLINE}${Client.stringify(draft)}`, ""));
+        Log.info("Preparing to send drafts:", Client.stringify(draft));
 
         const transporter = nodemailer.createTransport({
             host: Constants.SMTP_HOST,
@@ -75,17 +95,33 @@ export default class Client {
             }
         });
 
-        await Promise.all(drafts.map((draft) => transporter.sendMail(draft)));
+        await transporter.sendMail(draft);
 
-        Log.info("Drafts sent.");
+        Log.info("Draft sent.");
 
         transporter.close();
     }
 
-    async connectAndSendMail(imapConfig: Imap.Config) {
+    async sendSurvey(message: Message) {
+        if (!message?.body) {
+            return;
+        }
+
+        const keyValues = this.formParser.process(message.body);
+
+        const survey = new Rights4VapersSurvey(keyValues);
+
+        Log.info(`Submitting survey with form: ${survey.stringify()}`);
+
+        const response = await survey.send();
+
+        Log.info("response:", `${response}`);
+    }
+
+    async connectAndProcess(imapConfig: Imap.Config) {
         const connection = await imaps.connect({ imap: imapConfig });
         await connection.openBox(Constants.INBOX_NAME);
-        await this.sendMail(connection);
+        await this.process(connection);
         connection.end();
     }
 
@@ -105,7 +141,7 @@ export default class Client {
                     if (numNewMail > 0) {
                         Log.info(`New mail received: ${numNewMail}`);
                     }
-                    this.connectAndSendMail(imapConfig);
+                    this.connectAndProcess(imapConfig);
                 }
             };
             const connection = await imaps.connect(config);

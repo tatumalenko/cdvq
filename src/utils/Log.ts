@@ -1,4 +1,4 @@
-import Constants from "./Constants";
+import Constants from "../Constants";
 /* eslint-disable no-console */
 import { isError } from "./utils";
 
