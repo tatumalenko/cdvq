@@ -5,11 +5,11 @@
 import Imap from "imap";
 import imaps from "imap-simple";
 import nodemailer from "nodemailer";
+import "typescript-extensions";
 import Constants from "./Constants";
 import Rights4VapersFormParser from "./form/Rights4VapersFormParser";
 import Rights4VapersSurvey from "./form/Rights4VapersSurvey";
 import Message from "./mail/Message";
-import "./utils/extensions";
 import Log from "./utils/Log";
 
 process.on("unhandledRejection", (reason, p) => {
