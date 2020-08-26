@@ -9,8 +9,11 @@ export class Rights4VapersSurveyResponse {
 
     readonly success: boolean;
 
+    readonly body: string;
+
     constructor(response: Response<string>) {
         this.response = response;
+        this.body = response.body;
         this.success = response.body.includes(Constants.R4V_SURVEY_FORM_SUCCESS_MESSAGE);
     }
 }
@@ -22,8 +25,9 @@ export default class Rights4VapersSurvey {
 
     constructor(keyValues: KeyValues[]) {
         this.keyValues = Rights4VapersSurvey
-            .withOtherRequiredFields(Rights4VapersSurvey
-                .withNameField(keyValues));
+            .withNewsletterSignUpOptionField(Rights4VapersSurvey
+                .withOtherRequiredFields(Rights4VapersSurvey
+                    .withNameField(keyValues)));
 
         const form = new FormData();
 
@@ -41,7 +45,7 @@ export default class Rights4VapersSurvey {
     }
 
     private static withNameField(keyValues: KeyValues[]): KeyValues[] {
-        const nameKey = "input_1.3";
+        const nameKey = Constants.R4V_SURVEY_FORM_FIELD_NAME_FIRST_KEY;
         const nameKeyValues = keyValues.first((kv) => kv.key === nameKey);
 
         if (!nameKeyValues) {
@@ -75,8 +79,26 @@ export default class Rights4VapersSurvey {
         ];
     }
 
+    private static withNewsletterSignUpOptionField(keyValues: KeyValues[]): KeyValues[] {
+        return keyValues.map((keyValue) => {
+            if (keyValue.key === Constants.R4V_SURVEY_FORM_FIELD_NEWSLETTER_PARTIAL_KEY) {
+                return Rights4VapersSurvey.mapNewsletterKeyValuePartialKey(keyValue);
+            }
+            return keyValue;
+        });
+    }
+
+    private static mapNewsletterKeyValuePartialKey(keyValue: KeyValues): KeyValues {
+        return {
+            ...keyValue,
+            key: (keyValue.value.first() === Constants.R4V_SURVEY_FORM_FIELD_NEWSLETTER_ACCEPT_VALUE
+                ? Constants.R4V_SURVEY_FORM_FIELD_NEWSLETTER_ACCEPT_KEY
+                : Constants.R4V_SURVEY_FORM_FIELD_NEWSLETTER_DECLINE_KEY)
+        };
+    }
+
     async send(): Promise<Rights4VapersSurveyResponse> {
-        const response = await got.post("https://www.rights4vapers.com/fr/sondage/", {
+        const response = await got.post(Constants.R4V_SURVEY_FORM_URL, {
             body: this.form
         });
         return new Rights4VapersSurveyResponse(response);
@@ -87,7 +109,7 @@ export default class Rights4VapersSurvey {
             if (keyValue.formField?.isList) {
                 return acc + keyValue.value.reduce((a, s) => `${a}${Constants.NEWLINE}${keyValue.key}${s}`, "");
             } else if (keyValue.value.first()) {
-                return `${acc}${Constants.NEWLINE}${keyValue.key}${keyValue.value.first()}`;
+                return `${acc}${Constants.NEWLINE}${keyValue.key}: ${keyValue.value.first()}`;
             }
             return acc;
         }, "");

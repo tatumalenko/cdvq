@@ -111,11 +111,15 @@ export default class Client {
 
         const survey = new Rights4VapersSurvey(keyValues);
 
-        Log.info(`Submitting survey with form: ${survey.stringify()}`);
+        Log.info(`Submitting survey with form fields: ${survey.stringify()}`);
 
         const response = await survey.send();
 
-        Log.info("response:", `${response}`);
+        if (response.success) {
+            Log.info("Survey was successfully sent.");
+        } else {
+            Log.error("Survey was not successfully sent. Reponse body:", response.body);
+        }
     }
 
     async connectAndProcess(imapConfig: Imap.Config) {

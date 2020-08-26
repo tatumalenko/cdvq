@@ -65,6 +65,33 @@ info@droitsdesvapoteurs.ca
 
     public static readonly IMAP_PORT = 993;
 
+    public static readonly R4V_SURVEY_FORM_URL = "https://www.rights4vapers.com/fr/sondage/";
+
+    public static readonly R4V_SURVEY_FORM_FIELD_NAME_DELIMITER = " ";
+
+    public static readonly R4V_SURVEY_FORM_FIELD_NAME_FIRST_KEY = "input_1.3";
+
+    public static readonly R4V_SURVEY_FORM_FIELD_NAME_LAST_KEY = "input_1.6";
+
+    public static readonly R4V_SURVEY_FORM_FIELD_NEWSLETTER_PARTIAL_KEY = "input_17.";
+
+    public static readonly R4V_SURVEY_FORM_FIELD_NEWSLETTER_ACCEPT_KEY = "input_17.1";
+
+    public static readonly R4V_SURVEY_FORM_FIELD_NEWSLETTER_DECLINE_KEY = "input_17.2";
+
+    public static readonly R4V_SURVEY_FORM_FIELD_NEWSLETTER_ACCEPT_VALUE = "Oui";
+
+    public static readonly R4V_SURVEY_FORM_FIELDS_OTHER: KeyValues[] = [
+        {
+            key: "is_submit_17",
+            value: [ "1" ]
+        },
+        {
+            key: "gform_submit",
+            value: [ "17" ]
+        }
+    ];
+
     public static readonly R4V_SURVEY_FORM_FIELDS: FormField[] = [
         {
             key: "Nom",
@@ -123,27 +150,10 @@ info@droitsdesvapoteurs.ca
         {
             key: "Décharge légale",
             newKey: "input_16.1"
-        }
-    ];
-
-    public static readonly R4V_SURVEY_FORM_FIELD_NAME_DELIMITER = " ";
-
-    public static readonly R4V_SURVEY_FORM_FIELD_NAME_FIRST_KEY = "input_1.3";
-
-    public static readonly R4V_SURVEY_FORM_FIELD_NAME_LAST_KEY = "input_1.6";
-
-    public static readonly R4V_SURVEY_FORM_FIELDS_OTHER: KeyValues[] = [
-        {
-            key: "input_17.2",
-            value: [ "Non" ]
         },
         {
-            key: "is_submit_17",
-            value: [ "1" ]
-        },
-        {
-            key: "gform_submit",
-            value: [ "17" ]
+            key: "Voulez-vous vous abonner à la liste d’envoi Rights4Vapers pour recevoir des mises à jour importantes?  [Notez bien que ceci n'est pas la liste d'envoi de la CDVQ. Faites défiler jusqu'au bas de cette page pour vous abonner à notre liste d'envoi.]",
+            newKey: Constants.R4V_SURVEY_FORM_FIELD_NEWSLETTER_PARTIAL_KEY
         }
     ];
 
