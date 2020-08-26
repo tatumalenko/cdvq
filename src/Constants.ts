@@ -31,7 +31,7 @@ export default class Constants {
     public static readonly EMAIL_SUBJECT = "Votre lettre a été envoyé à votre député.e!";
 
     public static readonly EMAIL_BODY = `
-<p style="text-align:center;"><img src="https://surveymonkey-assets.s3.amazonaws.com/survey/290388197/3c327bde-2f10-410d-906d-6a83c6d9c32e.png" alt="CDVQ logo" width=316.97479" height="200"></p>
+<p style="text-align:center;"><img src="https://admin.pushpolitics.org/upload/1597771638220_CDVQ.png" alt="CDVQ logo" width=314.65295" height="200"></p>
 <div style="margin-left: 30px; margin-right: 30px;">
 <p style="line-height: 0px;">
 <h2 style="line-height: 0px;">Un gros merci!!</h2>
