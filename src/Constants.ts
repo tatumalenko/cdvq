@@ -35,14 +35,14 @@ export default class Constants {
 <div style="margin-left: 30px; margin-right: 30px;">
 <p style="line-height: 0px;">
 <h2 style="line-height: 0px;">Un gros merci!!</h2>
-Merci pour votre participation à notre campagne de lettre! Des petits gestes simples comme celui-ci par un grand nombre de personnes ont un impact important. 
+Merci pour votre participation à notre campagne de courriels aux députés! Des petits gestes simples comme celui-ci par un grand nombre de personnes ont un impact important. 
 <br><br>
 <h2 style="line-height: 0px;">Complétez le sondage</h2>
-Nos alliés de l'Ontario, <i>Rights4Vapers</i>, ont recueilli plus de 5,000 sondages mais nous avons besoin d'une plus grande participation de la part des vapoteurs et vapoteuses du Québec.
+<i>Rights4Vapers</i> est un groupe national de défense des droits des vapoteurs avec qui nous travaillons en partenariat. Ils ont recueilli plus de 5,000 sondages mais nous avons besoin d'une plus grande participation de la part des vapoteurs et vapoteuses du Québec.
 <br><br>
 <a style="font-weight: bold;" href="http://droitsdesvapoteurs.ca/sondage">Cliquez ici pour compléter le sondage!</a>
 <br><br>
-Nous vous invitons également à partager notre <a style="font-weight: bold;" href="http://droitsdesvapoteurs.ca/lettres">campagne de lettre</a> et le <a style="font-weight: bold;" href="http://droitsdesvapoteurs.ca/sondage">sondage</a> avec vos ami.e.s!
+Nous vous invitons également à partager notre <a style="font-weight: bold;" href="http://droitsdesvapoteurs.ca/lettres">campagne de courriels aux députés</a> et le <a style="font-weight: bold;" href="http://droitsdesvapoteurs.ca/sondage">sondage</a> avec vos ami.e.s!
 <br><br>
 <h2 style="line-height: 0px;">Abonnez-vous</h2>
 N'oubliez pas de vous abonner à notre <a style="font-weight: bold;" href="https://www.droitsdesvapoteurs.ca/#abonnez-vous">infolettre</a> pour recevoir des nouvelles et mises à jour.
