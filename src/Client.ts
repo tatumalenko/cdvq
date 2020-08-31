@@ -63,16 +63,13 @@ export default class Client {
             return;
         }
 
-        await Promise.all(messages.map((message) => {
+        for (const message of messages.filterNotNone()) {
             if (message?.from && message?.from.first() === Constants.EMAIL_CAMPAIGN_FROM) {
-                return this.sendMail(message);
+                await this.sendMail(message);
             } else if (message?.from && message?.from.first() === Constants.EMAIL_SURVEY_FROM) {
-                return this.sendSurvey(message);
+                await this.sendSurvey(message);
             }
-
-            return undefined;
-        })
-            .filterNotNone());
+        }
     }
 
     async sendMail(message: Message) {
