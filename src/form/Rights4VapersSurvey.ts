@@ -5,6 +5,8 @@ import Constants from "../Constants";
 import { KeyValues } from "./FormParser";
 
 export class Rights4VapersSurveyResponse {
+    readonly code: Number
+
     readonly response: Response<string>;
 
     readonly success: boolean;
@@ -15,6 +17,7 @@ export class Rights4VapersSurveyResponse {
         this.response = response;
         this.body = response.body;
         this.success = response.body.includes(Constants.R4V_SURVEY_FORM_SUCCESS_MESSAGE);
+        this.code = response.statusCode;
     }
 }
 

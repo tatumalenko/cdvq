@@ -100,6 +100,8 @@ export default class Client {
     }
 
     async sendSurvey(message: Message) {
+        Log.info("Email from Squarespace received, attempting to create survey request.");
+
         if (!message?.body) {
             return;
         }
@@ -115,7 +117,7 @@ export default class Client {
         if (response.success) {
             Log.info("Survey was successfully sent.");
         } else {
-            Log.error("Survey was not successfully sent. Reponse body:", response.body);
+            Log.error(`An error occurred while attempting to submit survey. Response code: ${response.code}, Reponse body:`, response.body);
         }
     }
 

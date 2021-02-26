@@ -24,7 +24,7 @@ export default class Constants {
 
     public static readonly EMAIL_CAMPAIGN_FROM = "people@pushpolitics.net";
 
-    public static readonly EMAIL_SURVEY_FROM = "no-reply@squarespace.info";
+    public static readonly EMAIL_SURVEY_FROM = "form-submission@squarespace.info";
 
     public static readonly EMAIL_SENDER = "CDVQ";
 
@@ -83,12 +83,16 @@ info@droitsdesvapoteurs.ca
 
     public static readonly R4V_SURVEY_FORM_FIELDS_OTHER: KeyValues[] = [
         {
-            key: "is_submit_17",
+            key: "input_22",
+            value: [ "Québec" ]
+        },
+        {
+            key: "is_submit_19",
             value: [ "1" ]
         },
         {
             key: "gform_submit",
-            value: [ "17" ]
+            value: [ "19" ]
         }
     ];
 
@@ -98,6 +102,10 @@ info@droitsdesvapoteurs.ca
             newKey: "input_1.3"
         },
         {
+            key: "Prénom", // TODO: Confirm
+            newKey: "input_1.6"
+        },
+        {
             key: "E-mail",
             newKey: "input_2"
         },
@@ -105,22 +113,22 @@ info@droitsdesvapoteurs.ca
             key: "Âge",
             newKey: "input_4"
         },
-        {
-            key: "Code postal",
-            newKey: "input_5"
-        },
+        // {
+        //     key: "Code postal", // TODO: Confirm
+        //     newKey: "input_5"
+        // },
         {
             key: "Nombre d'années de vapotage?",
             newKey: "input_8"
         },
         {
             key: "Les saveurs que vous vapotez?",
-            newKey: "input_18[]",
-            isList: true
+            newKey: "input_23",
+            isList: false // TODO: Confirm
         },
         {
             key: "La saveur que vous avez utilisé à l’initiation?",
-            newKey: "input_19[]",
+            newKey: "input_24", // TODO: Confirm
             isList: true
         },
         {

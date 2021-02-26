@@ -4,11 +4,11 @@ import { isError } from "./utils";
 
 export default class Log {
     public static info(...args: (string | Error)[]): void {
-        console.info(Log.format(...args));
+        console.info(`[INFO] ${Log.format(...args)}`);
     }
 
     public static error(...args: (string | Error)[]): void {
-        console.error(Log.format(...args));
+        console.error(`[ERROR] ${Log.format(...args)}`);
     }
 
     private static format(...args: (string | Error)[]): string {
