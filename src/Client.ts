@@ -146,7 +146,7 @@ export default class Client {
         } else {
             const errorMessage = `An error occurred while attempting to submit survey (Response code: ${response.code}).`;
             Log.error(errorMessage);
-            this.sendErrorAlertMail(new Error(`${errorMessage}\nReponse body below:\n${response.body}`));
+            await this.sendErrorAlertMail(new Error(`${errorMessage}\nReponse body below:\n${response.body}`));
         }
     }
 
@@ -180,7 +180,7 @@ export default class Client {
             await connection.openBox(Constants.INBOX_NAME);
         } catch (e) {
             Log.error(e);
-            this.sendErrorAlertMail(e);
+            await this.sendErrorAlertMail(e);
         }
     }
 }
