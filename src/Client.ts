@@ -99,6 +99,33 @@ export default class Client {
         transporter.close();
     }
 
+    async sendErrorAlertMail(e: Error) {
+        Log.info("Preparing to send alert email.");
+
+        const message: nodemailer.SendMailOptions = {
+            from: `"${Constants.EMAIL_SENDER}" <${Constants.EMAIL_FROM}>"`,
+            to: Constants.EMAIL_ALERT_RECIPIENT,
+            subject: Constants.EMAIL_ALERT_SUBJECT,
+            html: `MESSAGE: ${e.message}\nSTACKTRACE: ${e.stack}`
+        };
+
+        const transporter = nodemailer.createTransport({
+            host: Constants.SMTP_HOST,
+            port: Constants.SMTP_PORT,
+            secure: false,
+            auth: {
+                user: Constants.EMAIL_SMTP_USERNAME,
+                pass: Constants.EMAIL_SMTP_PASSWORD
+            }
+        });
+
+        await transporter.sendMail(message);
+
+        Log.info("Alert email sent.");
+
+        transporter.close();
+    }
+
     async sendSurvey(message: Message) {
         Log.info("Email from Squarespace received, attempting to create survey request.");
 
@@ -117,7 +144,9 @@ export default class Client {
         if (response.success) {
             Log.info("Survey was successfully sent.");
         } else {
-            Log.error(`An error occurred while attempting to submit survey. Response code: ${response.code}, Reponse body:`, response.body);
+            const errorMessage = `An error occurred while attempting to submit survey (Response code: ${response.code}).`;
+            Log.error(errorMessage);
+            this.sendErrorAlertMail(new Error(`${errorMessage}\nReponse body below:\n${response.body}`));
         }
     }
 
@@ -151,6 +180,7 @@ export default class Client {
             await connection.openBox(Constants.INBOX_NAME);
         } catch (e) {
             Log.error(e);
+            this.sendErrorAlertMail(e);
         }
     }
 }
