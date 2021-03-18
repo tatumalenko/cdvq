@@ -4,6 +4,10 @@ import { FormField } from "./form/FormParserConfig";
 /* eslint-disable max-len */
 export default class Constants {
 
+    public static readonly EMAIL_CAMPAIGN_REPLY_ENABLED = process.env.EMAIL_CAMPAIGN_REPLY_ENABLED ?? false;
+
+    public static readonly R4V_SURVEY_FORM_FORWARDING_ENABLED = process.env.R4V_SURVEY_FORM_FORWARDING_ENABLED ?? false;
+
     public static readonly NEWLINE = "\n";
 
     public static readonly LIST_DELIMITER = ",";

@@ -64,9 +64,9 @@ export default class Client {
         }
 
         for (const message of messages.filterNotNone()) {
-            if (message?.from && message?.from.first() === Constants.EMAIL_CAMPAIGN_FROM) {
+            if (Constants.EMAIL_CAMPAIGN_REPLY_ENABLED && message?.from && message?.from.first() === Constants.EMAIL_CAMPAIGN_FROM) {
                 await this.sendMail(message);
-            } else if (message?.from && message?.from.first() === Constants.EMAIL_SURVEY_FROM) {
+            } else if (Constants.R4V_SURVEY_FORM_FORWARDING_ENABLED && message?.from && message?.from.first() === Constants.EMAIL_SURVEY_FROM) {
                 await this.sendSurvey(message);
             }
         }
@@ -159,6 +159,7 @@ export default class Client {
 
     async start() {
         try {
+            Log.info(`Starting application: EMAIL_CAMPAIGN_REPLY_ENABLED=${Constants.EMAIL_CAMPAIGN_REPLY_ENABLED}, R4V_SURVEY_FORM_FORWARDING_ENABLED=${Constants.R4V_SURVEY_FORM_FORWARDING_ENABLED}`)
             const imapConfig: Imap.Config = {
                 user: Constants.EMAIL_IMAP_USERNAME,
                 password: Constants.EMAIL_IMAP_PASSWORD,
